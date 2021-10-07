@@ -1,4 +1,4 @@
-from flask import (Blueprint, g, redirect, render_template, request, session,
+from flask import (Blueprint, flash, g, redirect, render_template, request, session,
                    url_for)
 
 from app.database import get_db
@@ -14,6 +14,7 @@ def login():
 @authorization_views.route('/logout')
 def logout():
     session.pop('user', None)
+    flash('Logout successful.', 'success')
     return redirect(url_for('index'))
 
 
@@ -25,6 +26,8 @@ def auth():
     ).fetchone()
     if user is not None:
         session['user'] = user['username']
+        flash('Login successful.', 'success')
         return redirect(url_for('index'))
     else:
+        flash('Login unsuccessful. Username not found.', 'danger')
         return redirect(url_for('auth.login'))

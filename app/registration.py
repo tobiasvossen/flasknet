@@ -1,4 +1,4 @@
-from flask import (Blueprint, g, redirect, render_template, request, session,
+from flask import (Blueprint, flash, g, redirect, render_template, request, session,
                    url_for)
 
 from app.database import get_db
@@ -31,6 +31,8 @@ def register_user():
         except db.IntegrityError:
             error = "Username is already registered."
         else:
+            flash('Registration successful.', 'success')
             return redirect(url_for('auth.login'))
 
+    flash('Registration unsuccessful. ' + error, 'danger')
     return redirect(url_for('register.register'))

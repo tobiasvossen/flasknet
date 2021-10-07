@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 {% if g.user %}
-<p>Hello {{ g.user['username'] }} 👋</p>
+<p>Welcome, {{ g.user['prename'] }} {{ g.user['surname'] }} 👋</p>
 {% else %}
 <p>Welcome to FlaskNet 👋</p>
 {% endif %}
