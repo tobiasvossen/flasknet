@@ -1,5 +1,6 @@
 from app.auth import auth_views
 from app.database import get_db
+from app.register import register_views
 from flask import Flask
 from flask import g, render_template, session
 import os
@@ -14,6 +15,7 @@ def create_app():
     )
     app.secret_key = secrets.token_urlsafe(16)
     app.register_blueprint(auth_views, url_prefix='/')
+    app.register_blueprint(register_views, url_prefix='/')
 
     try:
         os.makedirs(app.instance_path)
