@@ -2,10 +2,14 @@
 
 {% block content %}
 <form action="/register_user" method="post">
-    <label for="prename">Prename:</label>
-    <input type="text" placeholder="Max" id="prename" name="prename"></input>
-    <label for="surname">Surname:</label>
-    <input type="text" placeholder="Mustermann" id="surname" name="surname"></input>
-    <input type="submit" value="Register"></input>
+    <div class="mb-3">
+        <label for="prename" class="form-label">Prename</label>
+        <input type="text" class="form-control" placeholder="Max" id="prename" name="prename"></input>
+    </div>
+    <div class="mb-3">
+        <label for="surname" class="form-label">Surname</label>
+        <input type="text" class="form-control" placeholder="Mustermann" id="surname" name="surname"></input>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
 </form>
 {% endblock %}

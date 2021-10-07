@@ -2,8 +2,10 @@
 
 {% block content %}
 <form action="/auth_user" method="post">
-    <label for="user">User:</label>
-    <input type="text" placeholder="max.mustermann" id="user" name="username"></input>
-    <input type="submit" value="Login"></input>
+    <div class="mb-3">
+        <label for="user" class="form-label">User</label>
+        <input type="text" class="form-control" placeholder="max.mustermann" id="user" name="username"></input>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
 </form>
 {% endblock %}
