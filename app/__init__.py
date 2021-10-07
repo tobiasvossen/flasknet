@@ -1,6 +1,6 @@
-from app.auth import auth_views
+from app.authorization import authorization_views
 from app.database import get_db
-from app.register import register_views
+from app.registration import registration_views
 from flask import Flask
 from flask import g, render_template, session
 import os
@@ -14,8 +14,8 @@ def create_app():
         DATABASE=os.path.join(app.instance_path, 'flasknet.sqlite'),
     )
     app.secret_key = secrets.token_urlsafe(16)
-    app.register_blueprint(auth_views, url_prefix='/')
-    app.register_blueprint(register_views, url_prefix='/')
+    app.register_blueprint(authorization_views, url_prefix='/')
+    app.register_blueprint(registration_views, url_prefix='/')
 
     try:
         os.makedirs(app.instance_path)
@@ -24,7 +24,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        return render_template('landing.html', page='Landing')
+        return render_template('home.html', page='Home')
 
     @app.route('/users')
     def users():

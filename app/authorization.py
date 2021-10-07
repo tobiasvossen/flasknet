@@ -3,21 +3,21 @@ from flask import (Blueprint, g, redirect, render_template, request, session,
 
 from app.database import get_db
 
-auth_views = Blueprint('auth', __name__)
+authorization_views = Blueprint('auth', __name__)
 
 
-@auth_views.route('/login')
+@authorization_views.route('/login')
 def login():
     return render_template('login.html', page='Login')
 
 
-@auth_views.route('/logout')
+@authorization_views.route('/logout')
 def logout():
     session.pop('user', None)
     return redirect(url_for('index'))
 
 
-@auth_views.route('/auth_user', methods=['POST'])
+@authorization_views.route('/auth_user', methods=['POST'])
 def auth():
     username = request.form['username']
     user = get_db().execute(

@@ -44,18 +44,12 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <p>{{ message }}</p>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 </body>
 
 </html>
