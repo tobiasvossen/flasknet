@@ -16,3 +16,30 @@ def message():
         'SELECT * FROM messages WHERE sender = ?', (username, )
     ).fetchall()
     return render_template('message.html', page='Message', received=received, sent=sent)
+
+
+@message_views.route('/send_message', methods=['POST'])
+def send():
+    db = get_db()
+    error = None
+    sender = session.get('user')
+    receiver = request.form['receiver']
+    content = request.form['message']
+    if not receiver:
+        error = 'Receiver is required.'
+    if not content:
+        error = 'Message is required.'
+    if error is None:
+        try:
+            db.execute(
+                "INSERT INTO messages (sender, receiver, content) VALUES (?, ?, ?)",
+                (sender, receiver, content))
+            db.commit()
+        except db.IntegrityError:
+            error = "Not null error"
+        else:
+            flash('Message sent.', 'success')
+            return redirect(url_for('message.message'))
+
+    flash('Message unsent.', 'danger')
+    return redirect(url_for('message.message'))
