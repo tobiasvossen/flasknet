@@ -8,7 +8,7 @@ import os
 import secrets
 
 
-def create_app():
+def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -19,6 +19,11 @@ def create_app():
     app.register_blueprint(message_views, url_prefix='/')
     app.register_blueprint(registration_views, url_prefix='/')
 
+    if test_config is None:
+        app.config.from_pyfile('config.py', silent=True)
+    else:
+        app.config.from_mapping(test_config)
+
     try:
         os.makedirs(app.instance_path)
     except OSError:
@@ -27,6 +32,10 @@ def create_app():
     @app.route('/')
     def index():
         return render_template('home.html', page='Home')
+
+    @app.route('/hello')
+    def hello():
+        return 'Hello, World!'
 
     @app.route('/users')
     def users():

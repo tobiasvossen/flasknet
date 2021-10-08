@@ -21,7 +21,7 @@ def message():
 
 
 @message_views.route('/message_user', methods=['POST'])
-def send():
+def message_user():
     db = get_db()
     error = None
     sender = session.get('user')
