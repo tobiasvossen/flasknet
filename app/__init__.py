@@ -31,10 +31,10 @@ def create_app():
     @app.route('/users')
     def users():
         users = get_db().execute(
-            'SELECT * FROM user').fetchall()
-        return render_template('list.html', list=users)
+            'SELECT username FROM user').fetchall()
+        return render_template('users.html', list=users, key='username')
 
-    @app.before_request
+    @ app.before_request
     def load_logged_in_user():
         username = session.get('user')
 

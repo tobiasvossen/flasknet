@@ -8,7 +8,9 @@ registration_views = Blueprint('register', __name__)
 
 @registration_views.route('/register')
 def register():
-    return render_template('register.html', page='Registration')
+    return render_template('register.html', page='Registration', action='register_user',
+                           fields=[['prename', 'Max'],
+                                   ['surname', 'Mustermann']], submit='Register')
 
 
 @registration_views.route('/register_user', methods=['POST'])

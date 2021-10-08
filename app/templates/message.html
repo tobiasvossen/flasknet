@@ -15,18 +15,7 @@
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="send" role="tabpanel" aria-labelledby="send-tab">
-        <form action="/send_message" method="post">
-            <div class="mb-3">
-                <label for="receiver" class="form-label">Receiver</label>
-                <input type="text" class="form-control" placeholder="max.mustermann" id="receiver"
-                    name="receiver"></input>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Message</label>
-                <input type="text" class="form-control" placeholder="Hello!" id="message" name="message"></input>
-            </div>
-            <button type="submit" class="btn btn-primary">Send</button>
-        </form>
+        {% include "components/form.html" %}
     </div>
     <div class="tab-pane fade" id="received" role="tabpanel" aria-labelledby="received-tab">
         {% for message in received %}

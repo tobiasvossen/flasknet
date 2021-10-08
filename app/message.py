@@ -15,10 +15,12 @@ def message():
     sent = get_db().execute(
         'SELECT * FROM messages WHERE sender = ?', (username, )
     ).fetchall()
-    return render_template('message.html', page='Message', received=received, sent=sent)
+    return render_template('message.html', page='Message', received=received, sent=sent, action='message_user',
+                           fields=[['receiver', 'max.mustermann'],
+                                   ['message', 'Hello!']], submit='Send')
 
 
-@message_views.route('/send_message', methods=['POST'])
+@message_views.route('/message_user', methods=['POST'])
 def send():
     db = get_db()
     error = None
