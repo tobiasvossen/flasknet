@@ -19,13 +19,14 @@ class AuthActions(object):
     def logout(self):
         return self._client.get('/logout')
 
+
 class RegistrationActions(object):
     def __init__(self, client):
         self._client = client
 
     def register(self, prename='Michael', surname='Jackson'):
-        return self._client.post('/register_user', data={'prename': prename, 'surname': surname})
-    
+        return self._client.post('/register', data={'prename': prename, 'surname': surname})
+
 
 @pytest.fixture
 def app():
@@ -55,6 +56,7 @@ def runner(app):
 @pytest.fixture
 def auth(client):
     return AuthActions(client)
+
 
 @pytest.fixture
 def registration(client):

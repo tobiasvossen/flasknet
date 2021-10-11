@@ -6,15 +6,8 @@ from app.database import get_db
 registration_views = Blueprint('register', __name__)
 
 
-@registration_views.route('/register')
+@registration_views.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html', page='Registration', action='register_user',
-                           fields=[['prename', 'Max'],
-                                   ['surname', 'Mustermann']], submit='Register')
-
-
-@registration_views.route('/register_user', methods=['GET', 'POST'])
-def register_user():
     if request.method == 'POST':
         db = get_db()
         error = None
@@ -38,5 +31,5 @@ def register_user():
                 return redirect(url_for('auth.login'))
 
         flash('Registration unsuccessful. ' + error, 'danger')
-    
+
     return redirect(url_for('index'))

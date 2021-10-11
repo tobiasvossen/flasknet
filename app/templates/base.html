@@ -23,7 +23,7 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/register">Register</a>
+                        <a class="nav-link" aria-current="page" href="/users/new">Register</a>
                     </li>
                     {% endif %}
                     <li class="nav-item">
@@ -39,7 +39,8 @@
             </div>
             {% if not g.user %}
             <form action="/login" method="post" class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Username" name="username" aria-label="username">
+                <input class="form-control me-2" type="text" placeholder="Username" name="username"
+                    aria-label="username">
                 <button class="btn btn-outline-success" type="submit">Login</button>
             </form>
             {% endif %}

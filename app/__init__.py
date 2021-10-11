@@ -2,6 +2,7 @@ from app.authorization import authorization_views
 from app.database import get_db
 from app.message import message_views
 from app.registration import registration_views
+from app.user import user_views
 from flask import Flask
 from flask import g, render_template, session
 import os
@@ -18,6 +19,7 @@ def create_app(test_config=None):
     app.register_blueprint(authorization_views, url_prefix='/')
     app.register_blueprint(message_views, url_prefix='/')
     app.register_blueprint(registration_views, url_prefix='/')
+    app.register_blueprint(user_views, url_prefix='/')
 
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
@@ -33,14 +35,9 @@ def create_app(test_config=None):
     def index():
         return render_template('home.html', page='Home')
 
-    @app.route('/users')
-    def users():
-        users = get_db().execute(
-            'SELECT username FROM user').fetchall()
-        return render_template('users.html', page='Users', list=users, key='username')
-
-    @ app.before_request
-    def load_logged_in_user():
+    @app.before_request
+    def set_user_from_session():
+        """Checks wether our session has an active and therefore logged in user."""
         username = session.get('user')
 
         if username is None:

@@ -11,12 +11,14 @@ def test_login(client, auth):
         assert session['user'] == 'max.mustermann'
         assert g.user['username'] == 'max.mustermann'
 
+
 def test_logout(client, auth):
     auth.login()
 
     with client:
         auth.logout()
         assert 'user' not in session
+
 
 def test_index(client, auth):
     response = client.get('/')
