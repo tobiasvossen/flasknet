@@ -25,5 +25,5 @@ def login():
             flash('Login successful.', 'success')
         else:
             flash('Login unsuccessful. Username not found.', 'danger')
-
+            
     return redirect(url_for('index'))

@@ -13,28 +13,30 @@ def register():
                                    ['surname', 'Mustermann']], submit='Register')
 
 
-@registration_views.route('/register_user', methods=['POST'])
+@registration_views.route('/register_user', methods=['GET', 'POST'])
 def register_user():
-    db = get_db()
-    error = None
-    prename = request.form['prename']
-    surname = request.form['surname']
-    if not surname:
-        error = 'Surname is required.'
-    if not prename:
-        error = 'Prename is required.'
-    if error is None:
-        username = prename.lower() + "." + surname.lower()
-        try:
-            db.execute(
-                "INSERT INTO user (username, prename, surname) VALUES (?, ?, ?)",
-                (username, prename, surname))
-            db.commit()
-        except db.IntegrityError:
-            error = "Username is already registered."
-        else:
-            flash('Registration successful.', 'success')
-            return redirect(url_for('auth.login'))
+    if request.method == 'POST':
+        db = get_db()
+        error = None
+        prename = request.form['prename']
+        surname = request.form['surname']
+        if not surname:
+            error = 'Surname is required.'
+        if not prename:
+            error = 'Prename is required.'
+        if error is None:
+            username = prename.lower() + "." + surname.lower()
+            try:
+                db.execute(
+                    "INSERT INTO user (username, prename, surname) VALUES (?, ?, ?)",
+                    (username, prename, surname))
+                db.commit()
+            except db.IntegrityError:
+                error = "Username is already registered."
+            else:
+                flash('Registration successful.', 'success')
+                return redirect(url_for('auth.login'))
 
-    flash('Registration unsuccessful. ' + error, 'danger')
-    return redirect(url_for('register.register'))
+        flash('Registration unsuccessful. ' + error, 'danger')
+    
+    return redirect(url_for('index'))

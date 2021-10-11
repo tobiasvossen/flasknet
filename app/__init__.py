@@ -33,15 +33,11 @@ def create_app(test_config=None):
     def index():
         return render_template('home.html', page='Home')
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
-
     @app.route('/users')
     def users():
         users = get_db().execute(
             'SELECT username FROM user').fetchall()
-        return render_template('users.html', list=users, key='username')
+        return render_template('users.html', page='Users', list=users, key='username')
 
     @ app.before_request
     def load_logged_in_user():
