@@ -1,4 +1,10 @@
 <form action="/{{ action }}" method="post">
+    {% for id, value in static_fields %}
+    <div class="mb-3">
+        <label for="{{ id }}" class="form-label">{{ id.capitalize() }}</label>
+        <input type="text" readonly class="form-control" value="{{ value }}" id="{{ id }}" name="{{ id }}"></input>
+    </div>
+    {% endfor %}
     {% for id, placeholder in fields %}
     <div class="mb-3">
         <label for="{{ id }}" class="form-label">{{ id.capitalize() }}</label>

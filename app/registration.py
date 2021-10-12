@@ -28,8 +28,8 @@ def register():
                 error = "Username is already registered."
             else:
                 flash('Registration successful.', 'success')
-                return redirect(url_for('auth.login'))
+                return redirect(url_for('index'))
 
         flash('Registration unsuccessful. ' + error, 'danger')
 
-    return redirect(url_for('index'))
+    return render_template('home.html', page='Home')

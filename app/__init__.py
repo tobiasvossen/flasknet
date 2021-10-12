@@ -1,12 +1,13 @@
-from app.authorization import authorization_views
-from app.database import get_db
-from app.message import message_views
-from app.registration import registration_views
-from app.user import user_views
-from flask import Flask
-from flask import g, render_template, session
 import os
 import secrets
+
+from flask import Flask, g, render_template, session
+
+from app.authorization import authorization_views
+from app.communication import communication_views
+from app.database import get_db
+from app.registration import registration_views
+from app.user import user_views
 
 
 def create_app(test_config=None):
@@ -17,7 +18,7 @@ def create_app(test_config=None):
     )
     app.secret_key = secrets.token_urlsafe(16)
     app.register_blueprint(authorization_views, url_prefix='/')
-    app.register_blueprint(message_views, url_prefix='/')
+    app.register_blueprint(communication_views, url_prefix='/')
     app.register_blueprint(registration_views, url_prefix='/')
     app.register_blueprint(user_views, url_prefix='/')
 

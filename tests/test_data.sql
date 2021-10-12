@@ -6,7 +6,6 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (username, prename, surname) VALUES ("max.mustermann", "Max", "Mustermann");
-INSERT INTO user (username, prename, surname) VALUES ("mara.musterfrau", "Mara", "Musterfrau");
 
 DROP TABLE IF EXISTS messages; 
 CREATE TABLE messages (
@@ -16,4 +15,3 @@ CREATE TABLE messages (
 );
 
 INSERT INTO messages (sender, receiver, content) VALUES ("max.mustermann", "mara.musterfrau", "Hello Mara.");
-INSERT INTO messages (sender, receiver, content) VALUES ("mara.musterfrau", "max.mustermann", "Hello Max.");

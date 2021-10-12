@@ -9,7 +9,7 @@ with open(os.path.join(os.path.dirname(__file__), 'tests/test_data.sql'), 'rb') 
     _data_sql = f.read().decode('utf8')
 
 
-class AuthActions(object):
+class Actions(object):
     def __init__(self, client):
         self._client = client
 
@@ -19,16 +19,14 @@ class AuthActions(object):
     def logout(self):
         return self._client.get('/logout')
 
-
-class RegistrationActions(object):
-    def __init__(self, client):
-        self._client = client
-
-    def register(self, prename='Michael', surname='Jackson'):
+    def register(self, prename='Mara', surname='Musterfrau'):
         return self._client.post('/register', data={'prename': prename, 'surname': surname})
 
+    def message(self, sender='max.mustermann', receiver='mara.musterfrau', content='Hello, Mara!'):
+        return self._client.post('/message_user', data={'sender': sender, 'receiver': receiver, 'content': content})
 
-@pytest.fixture
+
+@ pytest.fixture
 def app():
     db_fd, db_path = tempfile.mkstemp()
     app = create_app({'TESTING': True, 'DATABASE': db_path})
@@ -43,21 +41,16 @@ def app():
     os.unlink(db_path)
 
 
-@pytest.fixture
+@ pytest.fixture
 def client(app):
     return app.test_client()
 
 
-@pytest.fixture
+@ pytest.fixture
 def runner(app):
     return app.test_cli_runner()
 
 
-@pytest.fixture
-def auth(client):
-    return AuthActions(client)
-
-
-@pytest.fixture
-def registration(client):
-    return RegistrationActions(client)
+@ pytest.fixture
+def action(client):
+    return Actions(client)
