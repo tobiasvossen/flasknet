@@ -1,20 +1,14 @@
 import pytest
-from app.database import get_db
 
 
-def test_message_success(app, client, action):
+def test_message_success(client, action):
     action.login()
     assert client.get('/message').status_code == 200
     response = action.message()
     assert response.headers['Location'] == 'http://localhost/message'
-
-    with app.app_context():
-        message = get_db().execute(
-            'SELECT * FROM messages WHERE sender = ? AND receiver = ?', ('max.mustermann', 'mara.musterfrau')
-        ).fetchone()
-        assert message is not None
-        assert message['sender'] == 'max.mustermann'
-        assert message['receiver'] == 'mara.musterfrau'
+    response = client.get('/communications')
+    assert response.status_code == 200
+    assert b'Hello, Mara!' in response.data
 
 
 @pytest.mark.parametrize(('sender', 'receiver', 'content', 'message'), (
