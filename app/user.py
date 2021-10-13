@@ -1,4 +1,4 @@
-from flask import (Blueprint, g, render_template, request, session)
+from flask import Blueprint, render_template, request, session
 
 from app.database import get_db
 

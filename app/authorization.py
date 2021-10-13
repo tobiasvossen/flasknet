@@ -1,10 +1,7 @@
-from sqlite3.dbapi2 import Error
-from flask import (Blueprint, flash, g, redirect, render_template, request, session,
-                   url_for)
+from flask import (Blueprint, flash, redirect, render_template, request,
+                   session, url_for)
 
 from app.database import get_db
-
-import sqlite3
 
 authorization_views = Blueprint('auth', __name__)
 

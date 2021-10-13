@@ -1,5 +1,5 @@
-from flask import g, session
 import pytest
+from flask import g, session
 
 
 def test_login_success(client, action):
@@ -17,7 +17,7 @@ def test_login_success(client, action):
     ('', b'Username is required.'),
     ('max', b'Username not found.'),
 ))
-def test_login_unsuccess(client, action, username, message):
+def test_login_unsuccess(action, username, message):
     response = action.login(username=username)
     assert message in response.data
 

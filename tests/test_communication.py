@@ -1,6 +1,5 @@
-from flask import g, session
-from app.database import get_db
 import pytest
+from app.database import get_db
 
 
 def test_message_success(app, client, action):

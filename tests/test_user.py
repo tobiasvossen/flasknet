@@ -5,6 +5,6 @@ def test_user_overview(client, action):
     assert b'max.mustermann' in response.data
 
 
-def test_new_user(client, action):
+def test_new_user(client):
     response = client.get('/users/new')
     assert response.status_code == 200
