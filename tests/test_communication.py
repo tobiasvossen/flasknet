@@ -5,7 +5,7 @@ import pytest
 
 def test_message_success(app, client, action):
     action.login()
-    assert client.get('/message_user').status_code == 200
+    assert client.get('/message').status_code == 200
     response = action.message()
     assert response.headers['Location'] == 'http://localhost/message'
 
@@ -30,6 +30,6 @@ def test_message_unsuccess(action, sender, receiver, content, message):
 
 def test_message_overview(client, action):
     action.login()
-    response = client.get('/message')
+    response = client.get('/communications')
     assert response.status_code == 200
     assert b'Hello Mara.' in response.data

@@ -37,5 +37,5 @@ def test_index(client, action):
 
     action.login()
     response = client.get('/')
-    assert b'Message' in response.data
+    assert b'Communications' in response.data
     assert b'Logout' in response.data

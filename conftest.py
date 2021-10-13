@@ -23,7 +23,7 @@ class Actions(object):
         return self._client.post('/register', data={'prename': prename, 'surname': surname})
 
     def message(self, sender='max.mustermann', receiver='mara.musterfrau', content='Hello, Mara!'):
-        return self._client.post('/message_user', data={'sender': sender, 'receiver': receiver, 'content': content})
+        return self._client.post('/message', data={'sender': sender, 'receiver': receiver, 'content': content})
 
 
 @ pytest.fixture
@@ -54,3 +54,8 @@ def runner(app):
 @ pytest.fixture
 def action(client):
     return Actions(client)
+
+
+def test_config():
+    assert not create_app().testing
+    assert create_app({'TESTING': True}).testing
