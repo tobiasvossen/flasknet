@@ -1,5 +1,5 @@
 import pytest
-from app.database import get_db
+from flasknet.database import get_db
 
 
 def test_register_success(app, client, action):

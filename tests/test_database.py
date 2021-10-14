@@ -1,7 +1,7 @@
 import sqlite3
 
 import pytest
-from app.database import get_db
+from flasknet.database import get_db
 
 
 def test_get_close_db(app):
@@ -10,6 +10,6 @@ def test_get_close_db(app):
         assert db is get_db()
 
     with pytest.raises(sqlite3.ProgrammingError) as e:
-        db.execute('SELECT')
+        db.execute('SELECT 1')
 
     assert 'closed' in str(e.value)

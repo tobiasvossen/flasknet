@@ -1,7 +1,7 @@
 from flask import (Blueprint, flash, redirect, render_template, request,
                    session, url_for)
 
-from app.database import get_db
+from flasknet.database import get_db
 
 communication_views = Blueprint('communication', __name__)
 

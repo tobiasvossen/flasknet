@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from app.database import get_db
+from flasknet.database import get_db
 
 user_views = Blueprint('user', __name__)
 

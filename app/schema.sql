@@ -1,6 +1,0 @@
-DROP TABLE IF EXISTS user; 
-CREATE TABLE user (
-  username TEXT UNIQUE NOT NULL,
-  prename TEXT NOT NULL,
-  surname TEXT NOT NULL
-);

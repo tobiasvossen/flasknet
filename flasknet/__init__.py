@@ -3,11 +3,15 @@ import secrets
 
 from flask import Flask, g, render_template, session
 
-from app.authorization import authorization_views
-from app.communication import communication_views
-from app.database import get_db, init_app
-from app.registration import registration_views
-from app.user import user_views
+from flasknet.authorization import authorization_views
+from flasknet.communication import communication_views
+from flasknet.database import get_db, init_db, close_db
+from flasknet.registration import registration_views
+from flasknet.user import user_views
+
+
+__version__ = '0.1.0'
+__author__ = 'Tobias Vossen'
 
 
 def create_app(test_config=None):
@@ -17,7 +21,7 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'flasknet.sqlite'),
     )
     app.secret_key = secrets.token_urlsafe(16)
-    init_app(app)
+
     app.register_blueprint(authorization_views, url_prefix='/')
     app.register_blueprint(communication_views, url_prefix='/')
     app.register_blueprint(registration_views, url_prefix='/')
@@ -32,6 +36,10 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    app.teardown_appcontext(close_db)
+    with app.app_context():
+        init_db()
 
     @app.route('/')
     def index():
@@ -50,3 +58,12 @@ def create_app(test_config=None):
             ).fetchone()
 
     return app
+
+
+def main():
+    app = create_app()
+    app.run(debug=True)
+
+
+if __name__ == '__main__':
+    main()

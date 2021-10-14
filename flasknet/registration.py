@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
-from app.database import get_db
+from flasknet.database import get_db
 
 registration_views = Blueprint('register', __name__)
 
