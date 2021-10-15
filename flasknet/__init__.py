@@ -1,51 +1,51 @@
 import os
-import secrets
+import argparse
+from typing import ClassVar
 
 from flask import Flask, g, render_template, session
 
 from flasknet.authorization import authorization_views
 from flasknet.communication import communication_views
-from flasknet.database import get_db, init_db, close_db
+from flasknet.config import DevelopmentConfig, ProductionConfig, TestingConfig
+from flasknet.database import close_db, get_db, init_app, init_db
 from flasknet.registration import registration_views
 from flasknet.user import user_views
 
 
-__version__ = '0.1.0'
-__author__ = 'Tobias Vossen'
-
-
-def create_app(test_config=None):
+def create_app(config='testing', database=None):
     app = Flask(__name__)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flasknet.sqlite'),
-    )
-    app.secret_key = secrets.token_urlsafe(16)
-
+    app.name = 'FlaskNet'
     app.register_blueprint(authorization_views, url_prefix='/')
     app.register_blueprint(communication_views, url_prefix='/')
     app.register_blueprint(registration_views, url_prefix='/')
     app.register_blueprint(user_views, url_prefix='/')
 
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
+    if config == 'development':
+        app.config.from_object(DevelopmentConfig())
+    elif config == 'production':
+        app.config.from_object(ProductionConfig())
     else:
-        app.config.from_mapping(test_config)
+        app.config.from_object(TestingConfig())
 
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
+    if database is None:
+        app.config.update(DATABASE=os.path.join(app.instance_path, 'flasknet.sqlite'))
+    else:
+        app.config.update(DATABASE=database)
+
     app.teardown_appcontext(close_db)
     with app.app_context():
-        init_db()
+        init_app(app)
 
-    @app.route('/')
+    @ app.route('/')
     def index():
         return render_template('home.html', page='Home')
 
-    @app.before_request
+    @ app.before_request
     def set_user_from_session():
         """Checks wether our session has an active and therefore logged in user."""
         username = session.get('user')
@@ -61,8 +61,12 @@ def create_app(test_config=None):
 
 
 def main():
-    app = create_app()
-    app.run(debug=True)
+    parser = argparse.ArgumentParser(prog='A simple social network made with Flask.')
+    parser.add_argument('-config', choices=['development',
+                        'production', 'testing'], default='production', help='Please choose a configuration.')
+    args = parser.parse_args()
+    app = create_app(config=args.config)
+    app.run()
 
 
 if __name__ == '__main__':

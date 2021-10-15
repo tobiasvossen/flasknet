@@ -4,12 +4,16 @@ A simple social network made with Flask.
 
 ## Installation
 
-```
+Install the project with:
+
+```sh
 pip install .
 ```
 
 ## Usage
 
-```
-flasknet run
+Start the project with:
+
+```sh
+start
 ```

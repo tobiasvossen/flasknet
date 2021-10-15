@@ -29,7 +29,7 @@ class Actions(object):
 @ pytest.fixture
 def app():
     db_fd, db_path = tempfile.mkstemp()
-    app = create_app(database=db_path)
+    app = create_app(config='testing', database=db_path)
 
     with app.app_context():
         init_db()

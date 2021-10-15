@@ -9,7 +9,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'run = flasknet:main',
+            'start = flasknet:main',
         ],
     },
     zip_safe=False,

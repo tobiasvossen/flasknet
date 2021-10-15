@@ -21,7 +21,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with pylint
         run: |
-          pylint main.py ./app --disable=C,R,E0237,W0621
+          pylint ./flasknet --disable=C,R,E0237,W0621
           pylint conftest.py ./tests --disable=C,R,E0237,W0621
       - name: Test with pytest
         run: |
@@ -30,3 +30,6 @@ jobs:
         run: |
           coverage run -m pytest
           coverage report
+      - name: Package install test
+        run: |
+          pip install .
