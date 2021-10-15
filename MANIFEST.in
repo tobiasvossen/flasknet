@@ -1,0 +1,4 @@
+include flasknet/schema.sql
+graft flasknet/static
+graft flasknet/templates
+global-exclude *.pyc
